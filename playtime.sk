@@ -1,16 +1,19 @@
 command /playtime:
 	aliases: pt, ptime
 	trigger:
-		send action bar "&aYou've been playing for&7: &rformatSpan(time since (player's first login))"
+		send action bar "&3You've been playing for: &r%playtime(player)%"
 
 
 
-function formatSpan(t: timespan) :: string:
+function playtime(p: player) :: string:
+	set {_t} to time since (player's first login)
+	
 	set {_hours} to floor(hours of {_t})
-    set {_minutes} to (minutes of {_t}) - ((hours of {_t}) * 60)
-    set {_seconds} to (seconds of {_t}) - ((minutes of {_t}) * 60)
+	set {_minutes} to (minutes of {_t}) - ({_hours} * 60)
+	set {_seconds} to (seconds of {_t}) - ({_minutes} * 60)
 
     set {_hours} to {_hours} if length of "%{_hours}%" > 1 else "0%{_hours}%"
     set {_minutes} to {_minutes} if length of "%{_minutes}%" > 1 else "0%{_minutes}%"
     set {_seconds} to {_seconds} if length of "%{_seconds}%" > 1 else "0%{_seconds}%"
+
     return "&e%{_hours}%&7::&e%{_minutes}%&7::&e%{_seconds}%"
